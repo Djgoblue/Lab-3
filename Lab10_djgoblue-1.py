@@ -8,6 +8,7 @@ Date: July 5, 2026
 """
 
 from pathlib import Path
+from py_compile import main
 import string
  
 class WordAnalyzer:
@@ -80,3 +81,14 @@ class WordAnalyzer:
             if choice not in menu:
                 print("Invalid choice. Enter your choice (1-5)")
                 continue
+            
+            selected_file = menu[choice]
+            analyzer = WordAnalyzer(selected_file)
+            success = analyzer.process_file()
+            if success:
+                analyzer.print_report()
+            else:
+                print("Error: could not process file.")
+ 
+if __name__ == "__main__":
+    main()
