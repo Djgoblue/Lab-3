@@ -68,19 +68,20 @@ def main():
     #Display menu
     while True:
         print("\nWord Analyzer")
-        print("Select a file to analyze:")
+        print("Select a file to analyze:\n")
         for key, value in menu.items():
             print(f"{key} {value}")
-        print("5. Exit")
+        print("5 Exit")
 
-        choice = input("Enter your choice (1-5)").strip()
+        choice = input("\nEnter your choice (1-5):").strip()
 
         if choice == "5":
-            print("Goodbye!")
+            print("\nGoodbye!")
             break
 
         if choice not in menu:
-            print("Invalid choice. Enter your choice (1-5)")
+            print("\nInvalid choice. Enter your choice (1-5)")
+            input("Press Enter to continue...")
             continue
             
         selected_file = menu[choice]
