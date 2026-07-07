@@ -8,7 +8,6 @@ Date: July 5, 2026
 """
 
 from pathlib import Path
-from py_compile import main
 import string
  
 class WordAnalyzer:
@@ -19,6 +18,7 @@ class WordAnalyzer:
 
     #Contains main logic
     def process_file(self):
+        file = None
         try:
             if not self.__filepath.exists():
                 raise FileNotFoundError(f"File not found: {self.__filepath}")
@@ -44,7 +44,8 @@ class WordAnalyzer:
             return False
         
         finally:
-            file.close()
+            if file is not None:
+                file.close()
 
     #Prints the results of the word count
     def print_report(self):
@@ -53,42 +54,42 @@ class WordAnalyzer:
         for word in alphabetical:
             print(f"{word}: {self.__frequencies[word]}")
 
-    #Define main function to run the program
-    def main():
-        library = Path("files")
-        #Dictionary of files
-        menu = {
-        "1": library / "monte_cristo.txt",
-        "2": library / "princess_mars.txt",
-        "3": library / "Tarzan.txt",
-        "4": library / "treasure_island.txt"
-        }
+#Define main function to run the program
+def main():
+    library = Path("files")
+    #Dictionary of files
+    menu = {
+    "1": library / "monte_cristo.txt",
+    "2": library / "princess_mars.txt",
+    "3": library / "Tarzan.txt",
+    "4": library / "treasure_island.txt"
+    }
 
-        #Display menu
-        while True:
-            print("\nWord Analyzer")
-            print("Select a file to analyze:")
-            for key, value in menu.items():
-                print(f"{key} {value}")
-            print("5. Exit")
+    #Display menu
+    while True:
+        print("\nWord Analyzer")
+        print("Select a file to analyze:")
+        for key, value in menu.items():
+            print(f"{key} {value}")
+        print("5. Exit")
 
-            choice = input("Enter your choice (1-5)").strip()
+        choice = input("Enter your choice (1-5)").strip()
 
-            if choice == "5":
-                print("Goodbye!")
-                break
+        if choice == "5":
+            print("Goodbye!")
+            break
 
-            if choice not in menu:
-                print("Invalid choice. Enter your choice (1-5)")
-                continue
+        if choice not in menu:
+            print("Invalid choice. Enter your choice (1-5)")
+            continue
             
-            selected_file = menu[choice]
-            analyzer = WordAnalyzer(selected_file)
-            success = analyzer.process_file()
-            if success:
-                analyzer.print_report()
-            else:
-                print("Error: could not process file.")
+        selected_file = menu[choice]
+        analyzer = WordAnalyzer(selected_file)
+        success = analyzer.process_file()
+        if success:
+            analyzer.print_report()
+        else:
+            print("Error: could not process file.")
  
 if __name__ == "__main__":
     main()
