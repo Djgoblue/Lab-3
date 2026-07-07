@@ -41,3 +41,10 @@ class WordAnalyzer:
             return False
         finally:
             file.close()
+
+    #Prints the results of the word count
+    def print_report(self):
+        #Sort the keys alpahetically
+        alphabetical = sorted(self.__frequencies.keys())
+        for word in alphabetical:
+            print(f"{word}: {self.__frequencies[word]}")
