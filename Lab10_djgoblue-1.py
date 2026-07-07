@@ -15,3 +15,29 @@ class WordAnalyzer:
     def __init__(self, filepath):
         self.__filepath = Path(filepath)
         self.__frequencies = {}
+
+    #Contains main logic
+    def process_file(self):
+        try:
+            if not self.__filepath.exists():
+                raise FileNotFoundError(f"File not found: {self.__filepath}")
+            file = self.__filepath.open(encoding="utf-8")
+            #Create translation table to remove punctuation
+            translator = str.maketrans("", "", string.punctuation)
+
+            for line in file:
+                #Split the line into words
+                cleaned = line.translate(translator).lower().strip()
+                words = cleaned.split()
+                #Update the frequency counts
+                for word in words:
+                    if word in self.__frequencies:
+                        self.__frequencies[word] += 1
+                    else:
+                        self.__frequencies[word] = 1
+            return True
+        except FileNotFoundError:
+            print(f"File not found: {self.__filepath}")
+            return False
+        finally:
+            file.close()
