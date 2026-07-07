@@ -1,5 +1,5 @@
 """
-Program Name: Word Count
+Program Name: Word Analyzer
 Author: Daniel Joo
 Purpose: Lets the user select a text file and recieve a report 
 of the count of every word in the file.
@@ -21,6 +21,7 @@ class WordAnalyzer:
         try:
             if not self.__filepath.exists():
                 raise FileNotFoundError(f"File not found: {self.__filepath}")
+            
             file = self.__filepath.open(encoding="utf-8")
             #Create translation table to remove punctuation
             translator = str.maketrans("", "", string.punctuation)
@@ -36,9 +37,11 @@ class WordAnalyzer:
                     else:
                         self.__frequencies[word] = 1
             return True
+        
         except FileNotFoundError:
             print(f"File not found: {self.__filepath}")
             return False
+        
         finally:
             file.close()
 
@@ -48,3 +51,32 @@ class WordAnalyzer:
         alphabetical = sorted(self.__frequencies.keys())
         for word in alphabetical:
             print(f"{word}: {self.__frequencies[word]}")
+
+    #Define main function to run the program
+    def main():
+        library = Path("files")
+        #Dictionary of files
+        menu = {
+        "1": library / "monte_cristo.txt",
+        "2": library / "princess_mars.txt",
+        "3": library / "Tarzan.txt",
+        "4": library / "treasure_island.txt"
+        }
+
+        #Display menu
+        while True:
+            print("\nWord Analyzer")
+            print("Select a file to analyze:")
+            for key, value in menu.items():
+                print(f"{key} {value}")
+            print("5. Exit")
+
+            choice = input("Enter your choice (1-5)").strip()
+
+            if choice == "5":
+                print("Goodbye!")
+                break
+
+            if choice not in menu:
+                print("Invalid choice. Enter your choice (1-5)")
+                continue
